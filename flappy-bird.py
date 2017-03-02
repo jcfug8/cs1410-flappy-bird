@@ -28,12 +28,11 @@ class PygameStarter(game_mouse.Game):
         if 1 in newbuttons:
             print("button clicked")
 
-        for bar in self.barriers:
-            bar.move()
+        newest_bar = self.barrier_loop()
 
         self.bird.move_logic(keys, newkeys)
         if self.barriers[len(self.barriers) - 1].x < self.width - 80:
-            self.barriers.append(barrier.Barrier(self.width, self.height, bar.bottom_of_TW))
+            self.barriers.append(barrier.Barrier(self.width, self.height, newest_bar.bottom_of_TW))
         return
 
     def paint(self, surface):
@@ -42,6 +41,17 @@ class PygameStarter(game_mouse.Game):
             bar.paint(surface)
         self.bird.paint(surface)
         return
+
+    def barrier_loop(self):
+        destroy_barrier = False
+        for bar in self.barriers:
+            bar.move()
+            if bar.x + bar.width <= 0:
+                destroy_barrier = True
+            self.bird.collision_check(bar.x, bar.bottom_of_TW, bar.top_of_BW, bar.width)
+        if destroy_barrier == True:
+            self.barriers.pop(0)
+        return bar
 
 def main():
     screen_width = 600
