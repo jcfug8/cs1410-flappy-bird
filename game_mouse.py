@@ -6,7 +6,6 @@ import pygame.locals
 
 class Game:
     def __init__(self, name, width, height, frames_per_second):
-        
         self.width = width
         self.height = height
         self.frames_per_second = frames_per_second
@@ -24,7 +23,7 @@ class Game:
 
         # set the title of the window
         pygame.display.set_caption(name)
-
+        
         # set time tracking
         self.clock = pygame.time.Clock()
         self.this_frame_time = pygame.time.get_ticks() / 1000.
@@ -33,10 +32,10 @@ class Game:
 
     def get_frame_time(self):
         return self.this_frame_time
-
+        
     def get_delta_time(self):
         return self.delta_time
-
+        
     def game_logic(self, keys, newkeys, buttons, newbuttons, mouse_position):
         raise NotImplementedError()
         return
@@ -79,7 +78,7 @@ class Game:
 
                 if e.type == pygame.MOUSEMOTION:
                     mouse_position = e.pos
-
+                
                 # track which keys are currently set
                 if e.type == pygame.KEYDOWN:
                     keys.add(e.key)
@@ -96,3 +95,4 @@ class Game:
 
             pygame.display.flip()
         return
+
